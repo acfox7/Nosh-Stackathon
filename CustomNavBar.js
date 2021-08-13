@@ -20,8 +20,8 @@ export default function CustomNavigationBar({ navigation, previous }) {
 						<Appbar.Action icon='menu' color='white' onPress={openMenu} />
 					}
 				>
-					<Menu.Item title='Log In' />
-					<Menu.Item title='Sign Up' />
+					{/* <Menu.Item title='Log In' />
+					<Menu.Item title='Sign Up' /> */}
 				</Menu>
 			) : null}
 		</Appbar.Header>

@@ -1,20 +1,34 @@
 import 'react-native-gesture-handler'
 import firebase from './firebaseconfig'
-import React, { useState } from 'react'
-import { View, FlatList, StyleSheet } from 'react-native'
-import { Text, TextInput, List, Button, Checkbox } from 'react-native-paper'
+import React from 'react'
+import {
+	View,
+	ScrollView,
+	SafeAreaView,
+	FlatList,
+	StyleSheet,
+} from 'react-native'
+import {
+	Text,
+	TextInput,
+	List,
+	Button,
+	Checkbox,
+	Title,
+} from 'react-native-paper'
+import SingleListItem from './singleListItem'
 
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		//backgroundColor: '#fff',
+		backgroundColor: '#FAFFEB',
 		alignItems: 'center',
 		//marginTop: 70,
 	},
-	bigBlue: {
-		//color: 'blue',
+	listTitle: {
+		//color: '#22341D',
 		fontWeight: 'bold',
-		fontSize: 30,
+		fontSize: 20,
 	},
 	item: {
 		padding: 10,
@@ -23,49 +37,82 @@ const styles = StyleSheet.create({
 	},
 })
 
-export default function Ingredients({ navigation }) {
-	const [text, setText] = useState('')
-	const [ingredients, setIngredients] = useState([{ key: 'Orange' }])
-	return (
-		<View style={styles.container}>
-			<View
-				style={{
-					width: '100%',
-					alignItems: 'center',
-					justifyContent: 'center',
-					//backgroundColor: 'green',
-					flex: 1,
-				}}
-			>
-				<Text style={{ margin: 10, fontSize: 20, textAlign: 'center' }}>
-					Ingredients:
-				</Text>
-				<TextInput
+export default class Ingredients extends React.Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			textInput: '',
+			ingredients: [],
+		}
+		this.handleDelete = this.handleDelete.bind(this)
+	}
+	handleChange(text) {
+		this.setState({
+			textInput: text,
+		})
+	}
+	handleSubmit() {
+		// console.log('evt input: ', evt)
+		let currentIngredients = [...this.state.ingredients]
+		currentIngredients.push(this.state.textInput)
+		this.setState({
+			ingredients: currentIngredients,
+			textInput: '',
+		})
+	}
+	handleDelete(name) {
+		let currentIngredients = [...this.state.ingredients]
+		let newIngredients = currentIngredients.filter((item) => !(name === item))
+		this.setState({
+			ingredients: newIngredients,
+		})
+	}
+	render() {
+		const { ingredients, textInput } = this.state
+		const { navigation } = this.props
+		return (
+			<View style={styles.container}>
+				<View
 					style={{
-						width: '70%',
-						margin: 10,
+						width: '100%',
+						alignItems: 'center',
+						justifyContent: 'center',
+						flex: 1,
 					}}
-					mode='outlined'
-					defaultValue={text}
-					placeholder="What's in your fridge?"
-					onChangeText={(text) => setText(text)}
-					//some sort of on submit that adds to ingredients objects of format {key: 'Tomato'}
-				/>
+				>
+					<TextInput
+						style={{
+							width: '70%',
+							margin: 20,
+						}}
+						value={textInput}
+						enablesReturnKeyAutomatically
+						placeholder="What's in your fridge?"
+						onChangeText={(text) => this.handleChange(text)}
+						onSubmitEditing={() => this.handleSubmit()}
+					/>
+				</View>
+				<View style={{ width: '90%', flex: 5, paddingBottom: 40 }}>
+					<List.Subheader style={styles.listTitle}>
+						My Ingredients:
+					</List.Subheader>
+					<ScrollView>
+						<List.Section>
+							{this.state.ingredients.map((item, index) => (
+								<SingleListItem
+									key={index}
+									title={item}
+									name={item}
+									onDelete={this.handleDelete}
+								/>
+							))}
+						</List.Section>
+					</ScrollView>
+				</View>
+				<View style={{ flex: 1 }}>
+					<Button mode='contained'>What's for dinner?</Button>
+				</View>
 			</View>
-			<View style={{ width: '70%', alignItems: 'flex-start', flex: 3 }}>
-				<List.Section>
-					<List.Item title='Orange' />
-				</List.Section>
-				{/* <FlatList
-					data={ingredients}
-					renderItem={({ item }) => <Text style={styles.item}>{item.key}</Text>}
-					style={{ marginTop: 20 }}
-				/> */}
-			</View>
-			<Button
-				title='Search!'
-				//onPress={() => navigation.navigate('Ingredients')}
-			/>
-		</View>
-	)
+		)
+	}
 }

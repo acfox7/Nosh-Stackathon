@@ -28,6 +28,7 @@ const theme = {
 		...CombineDefaultTheme.colors,
 		primary: '#DBA159',
 		accent: '#C2DBBD',
+		backdrop: '#FAFFEB',
 		background: '#FAFFEB',
 		surface: '#AED6BB',
 		text: '#22341D',

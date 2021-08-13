@@ -29,7 +29,7 @@ const theme = {
 		primary: '#DBA159',
 		accent: '#C2DBBD',
 		background: '#FAFFEB',
-		surface: '#F8FA89',
+		surface: '#AED6BB',
 		text: '#22341D',
 		modals: '#EFD780',
 		placeholder: '#22341D',

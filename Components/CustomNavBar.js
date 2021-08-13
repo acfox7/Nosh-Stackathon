@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler'
-import firebase from './firebaseconfig'
+import firebase from '../firebaseconfig'
 import React, { useState } from 'react'
 import { Appbar, Menu } from 'react-native-paper'
 
@@ -11,7 +11,7 @@ export default function CustomNavigationBar({ navigation, previous }) {
 	return (
 		<Appbar.Header>
 			{previous ? <Appbar.BackAction onPress={navigation.goBack} /> : null}
-			<Appbar.Content title='My awesome app' />
+			<Appbar.Content title='NOSH' />
 			{!previous ? (
 				<Menu
 					visible={visible}

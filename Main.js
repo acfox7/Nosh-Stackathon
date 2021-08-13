@@ -1,3 +1,5 @@
+import 'react-native-gesture-handler'
+import firebase from './firebaseconfig'
 import React, { useState } from 'react'
 import {
 	ViewBase,
@@ -30,7 +32,7 @@ const styles = StyleSheet.create({
 	},
 })
 
-const Main = () => {
+const Main = ({ navigation }) => {
 	const [text, setText] = useState('')
 	const [ingredients, setIngredients] = useState([{ key: 'Orange' }])
 	return (
@@ -61,24 +63,6 @@ const Main = () => {
 					onChangeText={(text) => setText(text)}
 					//some sort of on submit that adds to ingredients objects of format {key: 'Tomato'}
 				/>
-				{/* <Image
-				source={{
-					url: 'https://c.files.bbci.co.uk/12A9B/production/_111434467_gettyimages-1143489763.jpg',
-				}}
-				style={{ width: 200, height: 200, margin: 10 }}
-			/> */}
-				{/* <TextInput
-				style={{
-					height: 40,
-					margin: 10,
-					borderColor: 'gray',
-					borderWidth: 1,
-				}}
-				onChangeText={(text) => setText(text)}
-				defaultValue={text}
-				placeholder='What should we name them?'
-			/>
-			<Text>Hmm... {text}</Text> */}
 			</View>
 			<View style={{ width: '70%', alignItems: 'flex-start', flex: 3 }}>
 				<FlatList
@@ -87,7 +71,10 @@ const Main = () => {
 					style={{ marginTop: 20 }}
 				/>
 			</View>
-			<Button title='Search!' />
+			<Button
+				title='Search!'
+				onPress={() => navigation.navigate('Ingredients')}
+			/>
 		</View>
 		// </ScrollView>
 	)

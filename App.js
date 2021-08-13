@@ -3,25 +3,36 @@ import firebase from './firebaseconfig'
 import { StatusBar } from 'expo-status-bar'
 import React from 'react'
 //import { AppRegistry } from 'react-native'
-import { NavigationContainer } from '@react-navigation/native'
+import {
+	NavigationContainer,
+	DefaultTheme as NavigationDefaultTheme,
+} from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-import { Provider as PaperProvider, DefaultTheme } from 'react-native-paper'
+import {
+	Provider as PaperProvider,
+	DefaultTheme as PaperDefaultTheme,
+} from 'react-native-paper'
+import merge from 'deepmerge'
 import Main from './Main'
+import Ingredients from './Ingredients'
+import CustomNavigationBar from './CustomNavBar'
 
 const Stack = createStackNavigator()
 
+const CombineDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme)
+
 const theme = {
-	...DefaultTheme,
+	...CombineDefaultTheme,
 	roundness: 2,
 	colors: {
-		...DefaultTheme.colors,
+		...CombineDefaultTheme.colors,
 		primary: '#DBA159',
 		accent: '#C2DBBD',
 		background: '#FAFFEB',
 		surface: '#F8FA89',
 		text: '#22341D',
 		modals: '#EFD780',
-    placeholder: '#22341D'
+		placeholder: '#22341D',
 	},
 }
 
@@ -30,14 +41,23 @@ export default function App() {
 	return (
 		<PaperProvider theme={theme}>
 			<NavigationContainer>
-				<Stack.Navigator>
+				<Stack.Navigator
+					initialRouteName='Home'
+					screenOptions={{
+						header: (props) => <CustomNavigationBar {...props} />,
+					}}
+				>
 					<Stack.Screen
 						name='Home'
 						component={Main}
 						options={{ title: 'Welcome' }}
 					/>
+					<Stack.Screen
+						name='Ingredients'
+						component={Ingredients}
+						options={{ title: "What's in your fridge!?" }}
+					/>
 				</Stack.Navigator>
-				{/* <Main /> */}
 				<StatusBar style='auto' />
 			</NavigationContainer>
 		</PaperProvider>

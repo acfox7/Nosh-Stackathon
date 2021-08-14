@@ -1,3 +1,6 @@
+//react navigation docs suggest a different way and went with that
+
+
 import 'react-native-gesture-handler'
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
@@ -9,23 +12,16 @@ const Auth = createStackNavigator()
 
 const AuthStack = () => (
 	<Auth.Navigator
-		initialRouteName='SignIn'
+		initialRouteName='Loading'
 		screenOptions={{
 			animationEnabled: false,
+			header: () => null,
 		}}
 	>
+		<Auth.Screen name='Loading' component={LoadingScreen} />
 		<Auth.Screen name='SignIn' component={SignInScreen} />
 		<Auth.Screen name='SignUp' component={SignUpScreen} />
 	</Auth.Navigator>
 )
-
-// const AuthNavigator = createSwitchNavigator(
-// 	{
-// 		Loading: { screen: LoadingScreen },
-// 		SignUp: { screen: SignUpScreen },
-// 		SignIn: { screen: SignInScreen },
-// 	},
-// 	{ initialRouteName: 'Loading' }
-// )
 
 export default AuthStack

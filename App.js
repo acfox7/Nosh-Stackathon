@@ -15,7 +15,10 @@ import {
 import merge from 'deepmerge'
 import Main from './Components/Main'
 import Ingredients from './Components/Ingredients'
-import AuthStack from './Components/AuthNavigator'
+import LoadingScreen from './Components/Loading'
+import SignInScreen from './Components/SignIn'
+import SignUpScreen from './Components/SignUp'
+//import AuthStack from './Components/AuthNavigator'
 import CustomNavigationBar from './Components/CustomNavBar'
 
 const Stack = createStackNavigator()
@@ -39,48 +42,50 @@ const theme = {
 }
 
 //if end up using redux store wrap that around the paper provider
-export default function App() {
-	// useEffect(() => {
-	// 	const authObserverUnsubscribe = firebase.onAuthStateChanged(
-	// 		(user) => {
-	// 			if (user) {
-	// 				console.log('User authenticated!')
-	// 			} else {
-	// 				console.log('User is not signed in or user logged out')
-	// 			}
-	// 		},
-	// 		(error) => {
-	// 			console.log('Error with authentication: ', error)
-	// 		}
-	// 	)
-	// 	return () => {
-	// 		authObserverUnsubscribe()
-	// 	}
-	// }, [])
-
-	return (
-		<PaperProvider theme={theme}>
-			<NavigationContainer>
-				<Stack.Navigator
-					initialRouteName='Auth'
-					screenOptions={{
-						header: (props) => <CustomNavigationBar {...props} />,
-					}}
-				>
-					<Stack.Screen name='Auth' component={AuthStack} />
-					<Stack.Screen
-						name='Home'
-						component={Main}
-						options={{ title: 'Welcome' }}
-					/>
-					<Stack.Screen
-						name='Ingredients'
-						component={Ingredients}
-						options={{ title: "What's in your fridge!?" }}
-					/>
-				</Stack.Navigator>
-				<StatusBar style='auto' />
-			</NavigationContainer>
-		</PaperProvider>
-	)
+export default class App extends React.Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			isLoggedIn: false,
+		}
+	}
+	render() {
+		const { isLoggedIn } = this.state
+		return (
+			<PaperProvider theme={theme}>
+				<NavigationContainer>
+					<Stack.Navigator>
+						{!isLoggedIn ? (
+							<>
+								<Stack.Screen name='Loading' component={LoadingScreen} />
+								<Stack.Screen name='SignIn' component={SignInScreen} />
+								<Stack.Screen name='SignUp' component={SignUpScreen} />
+							</>
+						) : (
+							<>
+								<Stack.Screen
+									name='Home'
+									component={Main}
+									options={{ title: 'Welcome' }}
+								/>
+								<Stack.Screen
+									name='Ingredients'
+									component={Ingredients}
+									options={{ title: "What's in your fridge!?" }}
+								/>
+							</>
+						)}
+						{/* <Stack.Navigator
+						initialRouteName='Auth'
+						screenOptions={{
+							header: (props) => <CustomNavigationBar {...props} />,
+						}}
+					> */}
+						{/* <Stack.Screen name='Auth' component={AuthStack} /> */}
+					</Stack.Navigator>
+					<StatusBar style='auto' />
+				</NavigationContainer>
+			</PaperProvider>
+		)
+	}
 }

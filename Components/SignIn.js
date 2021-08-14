@@ -3,8 +3,20 @@ import React from 'react'
 import { View } from 'react-native'
 import { Text } from 'react-native-paper'
 
-const SignIn = () => {
-	return <Text>Sign In Page</Text>
+class SignIn extends React.Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			email: '',
+			password: '',
+			errorMessage: '',
+			loading: false,
+		}
+	}
+
+	render() {
+		return <Text>Sign In Page</Text>
+	}
 }
 
 export default SignIn

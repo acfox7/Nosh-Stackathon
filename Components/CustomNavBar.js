@@ -3,6 +3,7 @@ import firebase from '../firebaseconfig'
 import React, { useState } from 'react'
 import { Appbar, Menu } from 'react-native-paper'
 
+//pass in usertoken to the item from app component
 export default function CustomNavigationBar({ navigation, previous }) {
 	const [visible, setVisible] = useState(false)
 	const openMenu = () => setVisible(true)
@@ -20,6 +21,7 @@ export default function CustomNavigationBar({ navigation, previous }) {
 						<Appbar.Action icon='menu' color='white' onPress={openMenu} />
 					}
 				>
+					{/* build in logic re: if logged in show log out and if not show nothing */}
 					{/* <Menu.Item title='Log In' />
 					<Menu.Item title='Sign Up' /> */}
 				</Menu>

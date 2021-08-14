@@ -46,18 +46,23 @@ export default class App extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			isLoggedIn: false,
+			isLoading: true,
+			userToken: null,
+			isSignout: false,
 		}
 	}
 	render() {
-		const { isLoggedIn } = this.state
+		const { isLoading, userToken } = this.state
+		if (isLoading) {
+			return <LoadingScreen />
+		}
 		return (
 			<PaperProvider theme={theme}>
 				<NavigationContainer>
 					<Stack.Navigator>
-						{!isLoggedIn ? (
+						{userToken === null ? (
 							<>
-								<Stack.Screen name='Loading' component={LoadingScreen} />
+								{/* <Stack.Screen name='Loading' component={LoadingScreen} /> */}
 								<Stack.Screen name='SignIn' component={SignInScreen} />
 								<Stack.Screen name='SignUp' component={SignUpScreen} />
 							</>
@@ -75,13 +80,6 @@ export default class App extends React.Component {
 								/>
 							</>
 						)}
-						{/* <Stack.Navigator
-						initialRouteName='Auth'
-						screenOptions={{
-							header: (props) => <CustomNavigationBar {...props} />,
-						}}
-					> */}
-						{/* <Stack.Screen name='Auth' component={AuthStack} /> */}
 					</Stack.Navigator>
 					<StatusBar style='auto' />
 				</NavigationContainer>

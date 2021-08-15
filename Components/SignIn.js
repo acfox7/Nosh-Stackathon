@@ -30,8 +30,6 @@ class SignIn extends React.Component {
 	}
 	onLoginSuccess(token) {
 		this.props.updateUserToken(token)
-		//may not need to navigate to home at all because of the way I set up the stack
-		//this.props.navigation.navigate('Home')
 	}
 	onLoginFailure(errorMessage) {
 		this.setState({ error: errorMessage })

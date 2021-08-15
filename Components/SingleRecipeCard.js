@@ -3,6 +3,7 @@ import firebase from 'firebase'
 import React from 'react'
 import { View, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import { Text, Divider, Title } from 'react-native-paper'
+import { useNavigation } from '@react-navigation/core'
 
 import { recipeInforamtion } from './recipeDummyData'
 
@@ -32,6 +33,8 @@ const styles = StyleSheet.create({
 
 export default function SingleRecipeCard(props) {
 	const { recipe } = props
+	const id = recipe.id
+	const navigation = useNavigation()
 	const ingredientsUsed = recipe.usedIngredients
 		.map((ingredient) => ingredient.name)
 		.join(', ')
@@ -41,20 +44,30 @@ export default function SingleRecipeCard(props) {
 	return (
 		<View style={styles.container}>
 			<View>
-				<Image style={styles.imageSize} source={{ uri: recipe.image }} />
+				<TouchableOpacity
+					onPress={() => navigation.navigate('SingleRecipePage', { id: id })}
+				>
+					<Image style={styles.imageSize} source={{ uri: recipe.image }} />
+				</TouchableOpacity>
 			</View>
 			<View style={styles.recipeInfoContainer}>
 				<View style={styles.textLine}>
-					<Text
-						style={{
-							flexWrap: 'wrap',
-							fontWeight: 'bold',
-							fontSize: '16',
-							textDecorationLine: 'underline',
-						}}
+					<TouchableOpacity
+						onPress={() =>
+							navigation.navigate('SingleRecipePage', { id: recipe.id })
+						}
 					>
-						{recipe.title}
-					</Text>
+						<Text
+							style={{
+								flexWrap: 'wrap',
+								fontWeight: 'bold',
+								fontSize: 16,
+								textDecorationLine: 'underline',
+							}}
+						>
+							{recipe.title}
+						</Text>
+					</TouchableOpacity>
 				</View>
 				<View style={styles.textLine}>
 					<Text style={styles.textWrap}>

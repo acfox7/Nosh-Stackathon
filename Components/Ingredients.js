@@ -115,7 +115,7 @@ export default class Ingredients extends React.Component {
 						mode='contained'
 						onPress={() => navigation.navigate('RecipeList')}
 					>
-						What's for dinner?
+						What's cooking?
 					</Button>
 				</View>
 			</View>

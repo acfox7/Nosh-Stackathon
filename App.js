@@ -20,6 +20,7 @@ import LoadingScreen from './Components/Loading'
 import SignInScreen from './Components/SignIn'
 import CustomNavigationBar from './Components/CustomNavBar'
 import RecipeSearchList from './Components/RecipeSearchList'
+import SingleRecipePage from './Components/SingleRecipePage'
 import { navigationRef } from './Components/RootNavigation'
 
 const Stack = createStackNavigator()
@@ -108,6 +109,10 @@ export default class App extends React.Component {
 									options={{ title: "What's in your fridge!?" }}
 								/>
 								<Stack.Screen name='RecipeList' component={RecipeSearchList} />
+								<Stack.Screen
+									name='SingleRecipePage'
+									component={SingleRecipePage}
+								/>
 							</>
 						)}
 					</Stack.Navigator>

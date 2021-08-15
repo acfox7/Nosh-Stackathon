@@ -36,10 +36,10 @@ export default class RecipeSearchList extends React.Component {
 				<Divider />
 				<ScrollView>
 					{this.state.recipes.map((recipe) => (
-						<>
+						<React.Fragment key={recipe.id}>
 							<SingleRecipeCard recipe={recipe} />
 							<Divider />
-						</>
+						</React.Fragment>
 					))}
 				</ScrollView>
 			</View>

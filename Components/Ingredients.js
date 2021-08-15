@@ -111,7 +111,12 @@ export default class Ingredients extends React.Component {
 					</ScrollView>
 				</View>
 				<View style={{ flex: 1 }}>
-					<Button mode='contained'>What's for dinner?</Button>
+					<Button
+						mode='contained'
+						onPress={() => navigation.navigate('RecipeList')}
+					>
+						What's for dinner?
+					</Button>
 				</View>
 			</View>
 		)

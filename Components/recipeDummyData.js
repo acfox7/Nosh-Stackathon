@@ -19,9 +19,15 @@ export const recipesByIngredients = [
 				name: 'onion',
 			},
 		],
-		usedIngreidents: [
+		usedIngredients: [
 			{
 				name: 'apple',
+			},
+			{
+				name: 'butter',
+			},
+			{
+				name: 'cloves',
 			},
 		],
 	},
@@ -37,7 +43,7 @@ export const recipesByIngredients = [
 			},
 		],
 		title: 'Apricot Glazed Apple Tart',
-		unusedIngredients: [
+		usedIngredients: [
 			{
 				name: 'apples',
 			},
@@ -52,7 +58,7 @@ export const recipesByIngredients = [
 			},
 		],
 		title: 'Seared Salmon with Lentil Salad',
-		unusedIngredients: [
+		usedIngredients: [
 			{
 				name: 'apple',
 			},

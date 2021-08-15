@@ -19,6 +19,7 @@ import Ingredients from './Components/Ingredients'
 import LoadingScreen from './Components/Loading'
 import SignInScreen from './Components/SignIn'
 import CustomNavigationBar from './Components/CustomNavBar'
+import RecipeSearchList from './Components/RecipeSearchList'
 import { navigationRef } from './Components/RootNavigation'
 
 const Stack = createStackNavigator()
@@ -106,6 +107,7 @@ export default class App extends React.Component {
 									component={Ingredients}
 									options={{ title: "What's in your fridge!?" }}
 								/>
+								<Stack.Screen name='RecipeList' component={RecipeSearchList} />
 							</>
 						)}
 					</Stack.Navigator>

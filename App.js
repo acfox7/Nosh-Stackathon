@@ -18,8 +18,6 @@ import Main from './Components/Main'
 import Ingredients from './Components/Ingredients'
 import LoadingScreen from './Components/Loading'
 import SignInScreen from './Components/SignIn'
-//import SignUpScreen from './Components/SignUp'
-//import AuthStack from './Components/AuthNavigator'
 import CustomNavigationBar from './Components/CustomNavBar'
 import { navigationRef } from './Components/RootNavigation'
 
@@ -95,7 +93,6 @@ export default class App extends React.Component {
 										/>
 									)}
 								</Stack.Screen>
-								{/* <Stack.Screen name='SignUpScreen' component={SignUpScreen} /> */}
 							</>
 						) : (
 							<>

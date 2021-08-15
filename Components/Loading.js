@@ -1,5 +1,6 @@
 import 'react-native-gesture-handler'
-import firebase from '../firebaseconfig'
+import firebase from 'firebase'
+//import firebase from '../firebaseconfig'
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import { Button, ActivityIndicator, Title } from 'react-native-paper'
@@ -23,19 +24,15 @@ class Loading extends React.Component {
 		}
 	}
 	componentDidMount() {
-		console.log('Props: ', this.props.navigation)
 		const navigate = this.props.navigation.navigate
+		const updateUserToken = this.props.updateUserToken
 		try {
 			firebase.auth().onAuthStateChanged(function (user) {
 				if (user) {
-					this.props.updateUserToken(user)
+					updateUserToken(user)
+					navigate('Home')
 				} else {
-					console.log('in else statement')
-					// this.setState({
-					// 	isLoggedIn: false,
-					// })
 					navigate('SignInScreen')
-					//RootNavigation.navigate('SignInScreen')
 				}
 			})
 		} catch (error) {
@@ -48,11 +45,7 @@ class Loading extends React.Component {
 		}
 		return (
 			<View style={styles.container}>
-				<Title>NOSH</Title>
-				<Welcome />
-				<View style={{ margin: 30 }}>
-					<ActivityIndicator animating={true} />
-				</View>
+				<ActivityIndicator animating={true} size='large' />
 			</View>
 		)
 	}

@@ -2,6 +2,7 @@
   "expo": {
     "name": "newStackathon",
     "slug": "newStackathon",
+    "scheme": "nosh",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

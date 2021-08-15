@@ -1,5 +1,6 @@
 import 'react-native-gesture-handler'
-import firebase from '../firebaseconfig'
+import firebase from 'firebase'
+//import firebase from '../firebaseconfig'
 import React from 'react'
 import {
 	View,

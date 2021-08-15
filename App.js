@@ -1,4 +1,5 @@
 import 'react-native-gesture-handler'
+//import firebase from 'firebase'
 import firebase from './firebaseconfig'
 import { StatusBar } from 'expo-status-bar'
 import React, { useEffect } from 'react'
@@ -17,9 +18,10 @@ import Main from './Components/Main'
 import Ingredients from './Components/Ingredients'
 import LoadingScreen from './Components/Loading'
 import SignInScreen from './Components/SignIn'
-import SignUpScreen from './Components/SignUp'
+//import SignUpScreen from './Components/SignUp'
 //import AuthStack from './Components/AuthNavigator'
 import CustomNavigationBar from './Components/CustomNavBar'
+import { navigationRef } from './Components/RootNavigation'
 
 const Stack = createStackNavigator()
 
@@ -50,29 +52,58 @@ export default class App extends React.Component {
 			userToken: null,
 			isSignout: false,
 		}
+		this.updateUserToken = this.updateUserToken.bind(this)
+	}
+	updateUserToken(token) {
+		this.setState({
+			userToken: token,
+		})
 	}
 	render() {
 		const { isLoading, userToken } = this.state
-		if (isLoading) {
-			return <LoadingScreen />
-		}
+		const initialScreen = userToken === null ? 'LoadingScreen' : 'Home'
 		return (
 			<PaperProvider theme={theme}>
-				<NavigationContainer>
-					<Stack.Navigator>
+				<NavigationContainer ref={navigationRef}>
+					<Stack.Navigator
+						initialRouteName={initialScreen}
+						screenOptions={{
+							header: (props) => (
+								<CustomNavigationBar
+									{...props}
+									userToken={this.state.userToken}
+									updateUserToken={this.updateUserToken}
+								/>
+							),
+						}}
+					>
+						<Stack.Screen name='LoadingScreen'>
+							{(props) => (
+								<LoadingScreen
+									{...props}
+									updateUserToken={this.updateUserToken}
+								/>
+							)}
+						</Stack.Screen>
 						{userToken === null ? (
 							<>
-								{/* <Stack.Screen name='Loading' component={LoadingScreen} /> */}
-								<Stack.Screen name='SignIn' component={SignInScreen} />
-								<Stack.Screen name='SignUp' component={SignUpScreen} />
+								<Stack.Screen name='SignInScreen'>
+									{(props) => (
+										<SignInScreen
+											{...props}
+											updateUserToken={this.updateUserToken}
+										/>
+									)}
+								</Stack.Screen>
+								{/* <Stack.Screen name='SignUpScreen' component={SignUpScreen} /> */}
 							</>
 						) : (
 							<>
-								<Stack.Screen
-									name='Home'
-									component={Main}
-									options={{ title: 'Welcome' }}
-								/>
+								<Stack.Screen name='Home'>
+									{(props) => (
+										<Main {...props} updateUserToken={this.updateUserToken} />
+									)}
+								</Stack.Screen>
 								<Stack.Screen
 									name='Ingredients'
 									component={Ingredients}

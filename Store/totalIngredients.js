@@ -2,8 +2,8 @@ import axios from 'axios'
 import firebase from 'firebase'
 
 export const GET_ALL_INGREDIENTS = 'GET_ALL_INGREDIENTS'
-const ADD_INGREDIENT = 'ADD_INGREDIENT'
-const REMOVE_INGREDIENT = 'REMOVE_INGREDIENT'
+export const ADD_INGREDIENT = 'ADD_INGREDIENT'
+export const REMOVE_INGREDIENT = 'REMOVE_INGREDIENT'
 
 export const haveAllIngredients = (ingredients) => {
 	return {
@@ -96,14 +96,14 @@ export const deleteIngredientFromDB = (ingredient, userId) => {
 export default function (state = [], action) {
 	switch (action.type) {
 		case GET_ALL_INGREDIENTS:
-			//console.log('Ingredients: ', action.ingredients)
 			return action.ingredients
 		case ADD_INGREDIENT:
 			let newState = [...state, action.ingredient]
 			return newState
 		case REMOVE_INGREDIENT:
 			newState = [...state]
-			return newState.filter((item) => !(item === action.ingredient))
+			newState = newState.filter((item) => !(item === action.ingredient))
+			return newState
 		default:
 			return state
 	}

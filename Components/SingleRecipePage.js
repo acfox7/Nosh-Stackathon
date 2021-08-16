@@ -71,6 +71,14 @@ class SingleRecipePage extends React.Component {
 		})
 	}
 	render() {
+		if (this.state.loading) {
+			return (
+				<View style={styles.loadingContainer}>
+					<ActivityIndicator animating={true} size='large' />
+				</View>
+			)
+		}
+
 		const recipeId = this.props.route.params.id
 		const recipeDetails = this.props.recipeDetails
 		//console.log('RECIPE DETAILS: ', recipeDetails.extendedIngredients)
@@ -87,14 +95,6 @@ class SingleRecipePage extends React.Component {
 					return totalInfo
 			  })
 			: null
-
-		if (this.state.loading) {
-			return (
-				<View style={styles.loadingContainer}>
-					<ActivityIndicator animating={true} size='large' />
-				</View>
-			)
-		}
 
 		return (
 			<View style={styles.mainContainer}>
@@ -135,7 +135,7 @@ class SingleRecipePage extends React.Component {
 							<View style={styles.textline}>
 								<Text style={styles.textWrap}>
 									<Text style={{ fontWeight: '600' }}>Source:</Text>
-									{recipeDetails.sourceURL}
+									{recipeDetails.sourceUrl}
 								</Text>
 							</View>
 						</View>

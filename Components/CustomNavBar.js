@@ -31,14 +31,24 @@ function CustomNavigationBar({
 					}
 				>
 					{user.uid ? (
-						<Menu.Item
-							title='LogOut'
-							onPress={() => {
-								firebase.auth().signOut()
-								removeUser(null)
-								updateUserToken(null)
-							}}
-						/>
+						<>
+							<Menu.Item
+								title='LogOut'
+								onPress={() => {
+									firebase.auth().signOut()
+									removeUser(null)
+									updateUserToken(null)
+								}}
+							/>
+							<Menu.Item
+								title='My Ingredients'
+								onPress={() => navigation.navigate('Ingredients')}
+							/>
+							<Menu.Item
+								title='Home'
+								onPress={() => navigation.navigate('Home')}
+							/>
+						</>
 					) : null}
 				</Menu>
 			) : null}

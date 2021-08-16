@@ -1,6 +1,10 @@
 const FILTER_OUT_INGREDIENT = 'FILTER_OUT_INGREDIENT'
 const FILTER_IN_INGREDIENT = 'FILTER_IN_INGREDIENT'
-import { GET_ALL_INGREDIENTS } from './totalIngredients'
+import {
+	GET_ALL_INGREDIENTS,
+	ADD_INGREDIENT,
+	REMOVE_INGREDIENT,
+} from './totalIngredients'
 
 export const filterOutIngredient = (ingredient) => {
 	return {
@@ -38,6 +42,13 @@ export default function (state = [], action) {
 			newState = newState.filter(
 				(ingredient) => !(ingredient === action.ingredient)
 			)
+			return newState
+		case ADD_INGREDIENT:
+			newState = [...state, action.ingredient]
+			return newState
+		case REMOVE_INGREDIENT:
+			newState = [...state]
+			newState = newState.filter((item) => !(item === action.ingredient))
 			return newState
 		default:
 			return state

@@ -9,6 +9,7 @@ import {
 	SafeAreaView,
 	FlatList,
 	StyleSheet,
+	RefreshControl,
 } from 'react-native'
 import {
 	Text,
@@ -49,7 +50,6 @@ class Ingredients extends React.Component {
 		super(props)
 		this.state = {
 			textInput: '',
-			ingredients: [],
 		}
 		this.handleDelete = this.handleDelete.bind(this)
 	}
@@ -67,10 +67,7 @@ class Ingredients extends React.Component {
 		const userId = this.props.user.uid
 		const newIngredient = this.state.textInput
 		this.props.addIngredientToDB(newIngredient, userId)
-		let currentIngredients = [...this.state.ingredients]
-		currentIngredients.push(this.state.textInput)
 		this.setState({
-			ingredients: currentIngredients,
 			textInput: '',
 		})
 	}

@@ -1,6 +1,7 @@
 import 'react-native-gesture-handler'
 import firebase from 'firebase'
 import React from 'react'
+import { connect } from 'react-redux'
 import { View, Image, StyleSheet, ScrollView } from 'react-native'
 import {
 	Text,
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
 	},
 })
 
-export default function SingleRecipePage(props) {
+function SingleRecipePage(props) {
 	const recipeId = props.route.params.id
 	const recipeInfo = recipeInformation.filter((info) => info.id === recipeId)[0]
 	const ingredientsList = recipeInfo.extendedIngredients.map(
@@ -133,3 +134,12 @@ export default function SingleRecipePage(props) {
 		</View>
 	)
 }
+
+const mapState = (state) => {
+	return {
+		recipeDetails: state.recipeDetails,
+		recipeInstructions: state.recipeInstructions,
+	}
+}
+
+export default connect(mapState, null)(SingleRecipePage)

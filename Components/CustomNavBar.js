@@ -1,14 +1,17 @@
 import 'react-native-gesture-handler'
 import firebase from 'firebase'
 //import firebase from '../firebaseconfig'
+import { connect } from 'react-redux'
 import React, { useState } from 'react'
 import { Appbar, Menu } from 'react-native-paper'
+import { removeUser } from '../Store/user'
 
 //pass in usertoken to the item from app component
-export default function CustomNavigationBar({
+function CustomNavigationBar({
 	navigation,
 	previous,
-	userToken,
+	user,
+	removeUser,
 	updateUserToken,
 }) {
 	const [visible, setVisible] = useState(false)
@@ -27,11 +30,12 @@ export default function CustomNavigationBar({
 						<Appbar.Action icon='menu' color='white' onPress={openMenu} />
 					}
 				>
-					{userToken !== null ? (
+					{user.uid ? (
 						<Menu.Item
 							title='LogOut'
 							onPress={() => {
 								firebase.auth().signOut()
+								removeUser(null)
 								updateUserToken(null)
 							}}
 						/>
@@ -41,3 +45,17 @@ export default function CustomNavigationBar({
 		</Appbar.Header>
 	)
 }
+
+const mapState = (state) => {
+	return {
+		user: state.user,
+	}
+}
+
+const mapDispatch = (dispatch) => {
+	return {
+		removeUser: () => dispatch(removeUser()),
+	}
+}
+
+export default connect(mapState, mapDispatch)(CustomNavigationBar)

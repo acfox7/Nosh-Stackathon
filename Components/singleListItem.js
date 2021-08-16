@@ -1,9 +1,10 @@
 import 'react-native-gesture-handler'
 import React, { useState } from 'react'
+import { connect } from 'react-redux'
 import { TouchableOpacity } from 'react-native'
 import { List, Checkbox, Divider } from 'react-native-paper'
 
-export default function SingleListItem(props) {
+function SingleListItem(props) {
 	const [isChecked, setIsChecked] = useState(true)
 	const { title, onDelete, name } = props
 	return (
@@ -29,3 +30,11 @@ export default function SingleListItem(props) {
 		</React.Fragment>
 	)
 }
+
+const mapState = (state) => {
+	return {
+		filterIngredients: state.filterIngredients,
+	}
+}
+
+export default connect(mapState, null)(SingleListItem)

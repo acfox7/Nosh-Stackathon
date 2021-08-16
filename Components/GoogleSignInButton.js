@@ -12,7 +12,7 @@ import * as Google from 'expo-auth-session/providers/google'
 WebBrowser.maybeCompleteAuthSession()
 
 export default function GoogleSignInButton(props) {
-	const onLoginSuccess = props.onLoginSuccess
+	//const onLoginSuccess = props.onLoginSuccess
 	const onLoginFailure = props.onLoginFailure
 
 	const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
@@ -26,7 +26,7 @@ export default function GoogleSignInButton(props) {
 				const googleProfileData = firebase
 					.auth()
 					.signInWithCredential(credential)
-				onLoginSuccess(googleProfileData)
+				//onLoginSuccess(googleProfileData)
 			} catch (error) {
 				onLoginFailure(error.message)
 			}

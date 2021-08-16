@@ -2,6 +2,7 @@ import 'react-native-gesture-handler'
 import firebase from 'firebase'
 //import firebase from '../firebaseconfig'
 import React from 'react'
+import { connect } from 'react-redux'
 import {
 	View,
 	ScrollView,
@@ -18,6 +19,11 @@ import {
 	Title,
 } from 'react-native-paper'
 import SingleListItem from './singleListItem'
+import {
+	getAllIngredients,
+	addIngredientToDB,
+	deleteIngredientFromDB,
+} from '../Store/totalIngredients'
 
 const styles = StyleSheet.create({
 	container: {
@@ -38,7 +44,7 @@ const styles = StyleSheet.create({
 	},
 })
 
-export default class Ingredients extends React.Component {
+class Ingredients extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -47,6 +53,10 @@ export default class Ingredients extends React.Component {
 		}
 		this.handleDelete = this.handleDelete.bind(this)
 	}
+	componentDidMount() {
+		const userId = this.props.user.uid
+		this.props.getAllIngredients(userId)
+	}
 	handleChange(text) {
 		this.setState({
 			textInput: text,
@@ -54,6 +64,9 @@ export default class Ingredients extends React.Component {
 	}
 	handleSubmit() {
 		// console.log('evt input: ', evt)
+		const userId = this.props.user.uid
+		const newIngredient = this.state.textInput
+		this.props.addIngredientToDB(newIngredient, userId)
 		let currentIngredients = [...this.state.ingredients]
 		currentIngredients.push(this.state.textInput)
 		this.setState({
@@ -62,15 +75,18 @@ export default class Ingredients extends React.Component {
 		})
 	}
 	handleDelete(name) {
-		let currentIngredients = [...this.state.ingredients]
-		let newIngredients = currentIngredients.filter((item) => !(name === item))
-		this.setState({
-			ingredients: newIngredients,
-		})
+		const userId = this.props.user.uid
+		this.props.deleteIngredientFromDB(name, userId)
+
+		// let currentIngredients = [...this.state.ingredients]
+		// let newIngredients = currentIngredients.filter((item) => !(name === item))
+		// this.setState({
+		// 	ingredients: newIngredients,
+		// })
 	}
 	render() {
-		const { ingredients, textInput } = this.state
-		const { navigation } = this.props
+		const { textInput } = this.state
+		const { totalIngredients, navigation } = this.props
 		return (
 			<View style={styles.container}>
 				<View
@@ -99,7 +115,7 @@ export default class Ingredients extends React.Component {
 					</List.Subheader>
 					<ScrollView>
 						<List.Section>
-							{this.state.ingredients.map((item, index) => (
+							{totalIngredients.map((item, index) => (
 								<SingleListItem
 									key={index}
 									title={item}
@@ -122,3 +138,23 @@ export default class Ingredients extends React.Component {
 		)
 	}
 }
+
+const mapState = (state) => {
+	return {
+		totalIngredients: state.totalIngredients,
+		filterIngredients: state.filterIngredients,
+		user: state.user,
+	}
+}
+
+const mapDispatch = (dispatch) => {
+	return {
+		getAllIngredients: (userId) => dispatch(getAllIngredients(userId)),
+		addIngredientToDB: (ingredient, userId) =>
+			dispatch(addIngredientToDB(ingredient, userId)),
+		deleteIngredientFromDB: (ingredient, userId) =>
+			dispatch(deleteIngredientFromDB(ingredient, userId)),
+	}
+}
+
+export default connect(mapState, mapDispatch)(Ingredients)

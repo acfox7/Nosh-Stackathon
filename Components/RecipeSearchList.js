@@ -1,6 +1,7 @@
 import 'react-native-gesture-handler'
 import firebase from 'firebase'
 import React from 'react'
+import { connect } from 'react-redux'
 import { View, ScrollView, StyleSheet } from 'react-native'
 import { List, Button, Title, Text, Divider } from 'react-native-paper'
 import SingleRecipeCard from './SingleRecipeCard'
@@ -19,7 +20,7 @@ const styles = StyleSheet.create({
 	},
 })
 
-export default class RecipeSearchList extends React.Component {
+class RecipeSearchList extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -46,3 +47,11 @@ export default class RecipeSearchList extends React.Component {
 		)
 	}
 }
+
+const mapState = (state) => {
+	return {
+		recipes: state.recipes,
+	}
+}
+
+export default connect(mapState, null)(RecipeSearchList)

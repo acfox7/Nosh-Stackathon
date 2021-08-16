@@ -2,9 +2,11 @@ import 'react-native-gesture-handler'
 import firebase from 'firebase'
 //import firebase from '../firebaseconfig'
 import React from 'react'
+import { connect } from 'react-redux'
 import { View, StyleSheet } from 'react-native'
 import { Button } from 'react-native-paper'
 import Welcome from './Welcome'
+import { removeUser } from '../Store/user'
 
 const styles = StyleSheet.create({
 	container: {
@@ -18,7 +20,7 @@ const styles = StyleSheet.create({
 	},
 })
 
-const Main = ({ navigation, updateUserToken }) => {
+const Main = ({ navigation, removeUser, updateUserToken }) => {
 	return (
 		<View style={styles.container}>
 			<Welcome />
@@ -29,8 +31,11 @@ const Main = ({ navigation, updateUserToken }) => {
 				<View style={styles.buttonContainer}>
 					<Button
 						onPress={() => {
+							console.log('button pressed')
 							firebase.auth().signOut()
+							removeUser(null)
 							updateUserToken(null)
+							//navigation.navigate('SignInScreen')
 						}}
 					>
 						Log Out
@@ -41,4 +46,10 @@ const Main = ({ navigation, updateUserToken }) => {
 	)
 }
 
-export default Main
+const mapDispatch = (dispatch) => {
+	return {
+		removeUser: () => dispatch(removeUser()),
+	}
+}
+
+export default connect(null, mapDispatch)(Main)

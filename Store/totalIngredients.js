@@ -1,7 +1,7 @@
 import axios from 'axios'
 import firebase from 'firebase'
 
-const GET_ALL_INGREDIENTS = 'GET_ALL_INGREDIENTS'
+export const GET_ALL_INGREDIENTS = 'GET_ALL_INGREDIENTS'
 const ADD_INGREDIENT = 'ADD_INGREDIENT'
 const REMOVE_INGREDIENT = 'REMOVE_INGREDIENT'
 

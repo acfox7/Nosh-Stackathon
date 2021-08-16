@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { TouchableOpacity } from 'react-native'
 import { List, Checkbox, Divider } from 'react-native-paper'
+import { ingredientFiltering } from '../Store/filterIngredients'
 
 function SingleListItem(props) {
 	const [isChecked, setIsChecked] = useState(true)
@@ -16,7 +17,10 @@ function SingleListItem(props) {
 					<Checkbox.Item
 						mode='android'
 						status={isChecked ? 'checked' : 'unchecked'}
-						onPress={() => setIsChecked(!isChecked)}
+						onPress={() => {
+							props.ingredientFiltering(!isChecked, name)
+							setIsChecked(!isChecked)
+						}}
 					/>
 				)}
 				right={() => (
@@ -37,4 +41,11 @@ const mapState = (state) => {
 	}
 }
 
-export default connect(mapState, null)(SingleListItem)
+const mapDispatch = (dispatch) => {
+	return {
+		ingredientFiltering: (checkedStatus, ingredient) =>
+			dispatch(ingredientFiltering(checkedStatus, ingredient)),
+	}
+}
+
+export default connect(mapState, mapDispatch)(SingleListItem)

@@ -33,7 +33,7 @@ function CustomNavigationBar({
 					{user.uid ? (
 						<>
 							<Menu.Item
-								title='LogOut'
+								title='Log Out'
 								onPress={() => {
 									firebase.auth().signOut()
 									removeUser(null)
